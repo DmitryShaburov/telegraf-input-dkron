@@ -18,4 +18,4 @@ Writes into graphite four metrics for each job in Dkron:
     commands = ["/opt/telegraf-input-dkron http://dkron.domain.local:8080"]
     timeout = "10s"
     data_format = "influx"
-    ```
+```
