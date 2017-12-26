@@ -24,7 +24,7 @@ type ExecutionJobResp struct {
 
 func main() {
 	if len(os.Args) == 1 {
-		fmt.Print("Host must be specified")
+		os.Stderr.WriteString("Host must be specified\n")
 		os.Exit(1)
 	}
 
@@ -34,7 +34,7 @@ func main() {
 	urlJobs := fmt.Sprintf("%s/v1/jobs", host)
 	respJobs, errJobs := resty.R().SetResult(&[]JobResp{}).Get(urlJobs)
 	if errJobs != nil {
-		fmt.Print(errJobs.Error())
+		os.Stderr.WriteString(errJobs.Error() + "\n")
 	}
 
 	resultJobs := respJobs.Result().(*[]JobResp)
@@ -47,7 +47,7 @@ func main() {
 		urlExecutions := fmt.Sprintf("%s/v1/jobs/%s/executions", host, job.Name)
 		respExecutions, errExecutions := resty.R().SetResult([]ExecutionJobResp{}).Get(urlExecutions)
 		if errExecutions != nil {
-			fmt.Print(errExecutions.Error())
+			os.Stderr.WriteString(errExecutions.Error() + "\n")
 		}
 		executions := respExecutions.Result().(*[]ExecutionJobResp)
 		var duration int64
